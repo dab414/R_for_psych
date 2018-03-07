@@ -1,0 +1,7 @@
+things that would be useful to get a survey of:
+
+programming experience (with R specifically)
+
+what kind of stuff would be most useful for your own data? 
+
+why are you doing this? what do you want to get out of it?
