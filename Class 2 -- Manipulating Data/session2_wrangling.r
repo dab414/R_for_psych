@@ -119,7 +119,7 @@
   ## data.table and dplyr both provide easy ways of doing this
 
   # read data
-  current_data <- fread('http://lehigh.edu/~dab414/easy_clean.csv')
+  current_data <- fread('http://lehigh.edu/~dab414/data/research_data/old/special_issue/easy_clean.csv')
 
   # check things out
   head(current_data)
