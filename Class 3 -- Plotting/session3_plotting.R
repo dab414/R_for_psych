@@ -51,8 +51,14 @@ options(scipen = 999) ## disabling scientific notation
 	p1 + ggtitle("Area Vs Population", subtitle="From midwest dataset") + xlab("Area") + ylab("Population")
 
 	## and we can chain all of this together:
-	ggplot(midwest, aes(x = area, y = poptotal)) + geom_point() + geom_smooth(method = 'lm') + 
-		ylim(0, 1000000) + ggtitle("Area Vs Population", subtitle="From midwest dataset") + xlab("Area") + ylab("Population")
+	ggplot(midwest, aes(x = area, y = poptotal)) + 
+	  geom_point() + 
+	  geom_smooth(method = 'lm') + 
+		ylim(0, 1000000) + 
+	  ggtitle("Area Vs Population", subtitle="From midwest dataset") + 
+	  xlab("Area") + 
+	  ylab("Population")
+	
 
 ## CHANGING GRAPH APPEARANCE
 
@@ -136,7 +142,7 @@ b <- ggplot(data, aes(x = factor1, y = dv)) + geom_bar(stat = 'identity', aes(fi
 b + geom_errorbar(aes(ymin = mean - se, ymax = mean + se, group = factor2), position = position_dodge(width = .9), width = .5)
 
 ## line plot, general code
-ggplot(data, aes(x = factor1, y = dv)) + geom_line(aes(color = factor2))
+ggplot(data, aes(x = factor1, y = dv)) + geom_line(aes(col = factor2))
 
 
 ## hall of fame http://r-statistics.co/Top50-Ggplot2-Visualizations-MasterList-R-Code.html
