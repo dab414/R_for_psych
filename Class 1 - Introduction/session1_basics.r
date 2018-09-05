@@ -1,4 +1,4 @@
-### SESSION 1 -- BASIC DATA MANEUVERS
+### SESSION 1 -- BASIC DATA MANEUVERS & DATA STRUCTURES
 
 ### Getting the hang of the R workflow can be a little tricky, and I imagine this is the first thing I'll go over in class
 
@@ -71,7 +71,7 @@
 		typeof(f)
 		class(f)
 		## this tells us that f is actually a character vector, not good
-			## i honestly can't really tell you the difference between these two, but just in general try both if one isn't making sense
+			## i honestly can't really tell you the difference between typeof() and class(), but just in general try both if one isn't making sense
 		## but we can change variable types by:
 		f <- as.factor(f) ## also as.character(), and as.numeric(), among others
 
@@ -95,10 +95,18 @@
 ## but once you master vectors the logic of data.frame() is WAY easier
 	
 library(MASS)
-	
+
+## we're using a dataset that R basically has built in
 df <- ToothGrowth
+
+## always a good idea to run this whenever you've imported data
 summary(df)
 
+## this gives you an Excel-type way of looking at the rows and columns of the data
+	## helpful for easing that separation anxiety from the data when you're first starting out
+View(df)
+
+## the same general rules for indexing that apply to vectors also apply to data.frames, except now you need to specify two indices because the data frame has rows and columns
 #  df[rows , columns]
 df[3,2]
 
@@ -118,8 +126,9 @@ df[df$len > 10,]
 # return all columns by leaving blank after comma
 df2 <- df[df$len > 10, ]
 
-## coding a new variable
 
+## coding a new variable
+	## the following line computes a new centered variable by taking the whole vector length (df$len) and subtracting from each element the mean of length (mean(df$len))
 df$len_c <- df$len - mean(df$len)
 
 df$lenX2[3] <- 10
@@ -128,6 +137,8 @@ colnames(df)[4] <- 'new_var'
 
 ## ifelse(conditional, iftrue, if_false)
 df$len_d <- ifelse(df$len > median(df$len), 1, 0)
+
+## ifelse can get nested, can get confusing
 df$len_d <- ifelse(df$len > 10, 2, ifelse(df$len > 4 & df$len < 10, 1, 0))
 
 

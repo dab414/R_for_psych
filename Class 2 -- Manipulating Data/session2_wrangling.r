@@ -13,11 +13,11 @@
 	# for installing a package, run this code:
 		install.packages('package') # where you replace the word package with the name of the package you want to install (but keep the quotes!)
 	# try this:
-		install.packages('data.table')
+		install.packages('dplyr')
 	# then load it like this:
-		library(data.table) # notice you don't need the quotes anymore
+		library(dplyr) # notice you don't need the quotes anymore
 	# to get more information about a package, go like this:
-		help(data.table) # this help page will prob be confusing at first, but that's okay cuz that's what I'm here for
+		help(dplyr) # this help page will prob be confusing at first, but that's okay cuz that's what I'm here for
 
 	# install and load the following packages: dplyr, ggplot2
 
@@ -105,18 +105,18 @@
 	# this one performs much faster than the others (good for big data), it tends to handle data correctly by default, and has a ton of options if you wanna mess: 
 		#https://www.rdocumentation.org/packages/data.table/versions/1.10.4-2/topics/fread
 
-### TOPIC 4: SUMMARIZING DATA WITH DATA.TABLE() and DPLYR()
+### TOPIC 4: SUMMARIZING DATA WITH DPLYR()
 
   ## last week we talked about working with data frames as the most relevant way for us psychologists to think about manipulating data in R
-  ## now we're introducing two packages that are specialially specially designed for making working with data easier
-  ## these packages are also primo for working with big data
+  ## now we're introducing a package that is specialially specially designed for making working with data easier
+  
   ## more than you ever wanted to know about dplyr vs data.table:
     # https://github.com/Rdatatable/data.table/wiki/Benchmarks-:-Grouping
     #TLDR: data.table is slightly faster, dplyr has more readable code
 
   ## we're often in a position where we need to summarize across subjects and then summarize across conditions to get cell means
   ## and we need to do this over and over for all different possible ways of looking at data
-  ## data.table and dplyr both provide easy ways of doing this
+  ## dplyr provides an easy ways of doing this
 
   # read data
   current_data <- fread('http://lehigh.edu/~dab414/data/research_data/old/special_issue/easy_clean.csv')
@@ -132,7 +132,74 @@
   # same with subject
   current_data$subject <- as.factor(current_data$subject)
 
-  ## we'll start with data.table(), bc it's very similar to data.frame()
+ ## COVER CONVERTING FROM LONG TO WIDE !!!
+
+  ## summarizing to cell means with dplyr
+  # important functions are, group_by(), summarize()
+
+  	## the first line handles the input AND output
+  	## current_data is the data i want to perform the operations on, subject_means is what i want to store the result to
+    subject_means <- current_data %>%
+    	## group_by doesn't actually *do* anything, it just tells R, alright, for the next operation that you *will* do, do it separately across these groups
+      group_by(subject, current, other) %>%
+      ## summarize is the operation that you want to perform; everything inside the summary parentheses takes the form:
+      ## new_variable = some_function(some_input) ... some_input is typically a variable from the dataset that you passed into the pipeline
+      summarize(transcode = mean(transcode)) 
+      
+
+    cell_means <- subject_means %>%
+      group_by(current, other) %>%
+      ## notice how you can string together multiple operations, separated by a comma
+      ## here we're computing two variables, means and standard errors
+      summarize(switch = mean(transcode), se = sd(transcode) / sqrt(n()))
+
+  ## dplyr can both do these in one step
+    
+      cell_means <- current_data %>%
+        group_by(subject, current, other) %>%
+        summarize(transcode = mean(transcode)) %>%
+        group_by(current, other) %>%
+        summarize(switch = mean(transcode), se = sd(transcode) / sqrt(n()))
+
+    ## use filter() to easily select only a subset of your data
+      cell_means <- current_data %>%
+      	## from here on out, keeping only trials after the fifth block
+      	filter(block > 5) %>%
+        group_by(subject, current, other) %>%
+        summarize(transcode = mean(transcode)) %>%
+        group_by(current, other) %>%
+        summarize(switch = mean(transcode), se = sd(transcode) / sqrt(n()))
+
+
+## A NOTE OF WARNING
+
+  ## indexing a data table or 'tibble' (as it's returned in dplyr) doesn't always return a vector like data.frame
+
+    #compare
+
+    current_data_df <- as.data.frame(current_data)
+
+    # data frame return type
+    current_data_df[1:5, 'current']
+    # data table
+    current_data[1:5, 'current']
+    # dplyr
+    subject_means[1:5, 'transcode']
+
+  ## this doesn't usually matter, but it's good to be aware of
+  ## to get a vector back from data table or dplyr, use the dollar sign indexing
+    current_data$current[1:5]
+    
+    
+    
+    
+    
+    
+## FOOTNOTE -- AN ALTERNATE METHOD
+	## im including this because i covered it last year and still have the notes / code
+	## but the community is pushing so strongly toward dplyr that i wouldn't even really recommend learning this alternate way of essentially doing the same things that can be done in dplyr
+
+ ## we'll start with data.table(), bc it's very similar to data.frame()
   ## basically:
 
     # dt[rows, columns, by = ]
@@ -166,55 +233,5 @@
     # cell means with SEs:
       cell_means <- subject_means[, .(switch = mean(switch), se = sd(switch) / sqrt(.N)), by = .(current, other)]      
 
-
-  ## doing the same thing with dplyr
-  # important functions are, group_by(), summarize()
-
-    subject_means <- current_data %>%
-      group_by(subject, current, other) %>%
-      summarize(transcode = mean(transcode)) %>%
-      ggplot()
-
-    cell_means <- subject_means %>%
-      group_by(current, other) %>%
-      summarize(switch = mean(transcode), se = sd(transcode) / sqrt(n()))
-
-  ## data table and dplyr can both do these in one step
-
-    # data table
-      cell_means <- current_data[, .(switch = mean(transcode)), by = .(subject, current, other)][, .(switch = mean(switch), se = sd(switch) / sqrt(.N)), by = .(current, other)][order(current,other)]
-    
-    # dplyr
-      cell_means <- current_data %>%
-        group_by(subject, current, other) %>%
-        summarize(transcode = mean(transcode)) %>%
-        group_by(current, other) %>%
-        summarize(switch = mean(transcode), se = sd(transcode) / sqrt(n()))
-
-## A NOTE OF WARNING
-
-  ## indexing a data table or 'tibble' (as it's returned in dplyr) doesn't always return a vector like data.frame
-
-    #compare
-
-    current_data_df <- as.data.frame(current_data)
-
-    # data frame return type
-    current_data_df[1:5, 'current']
-    # data table
-    current_data[1:5, 'current']
-    # dplyr
-    subject_means[1:5, 'transcode']
-
-  ## this doesn't usually matter, but it's good to be aware of
-  ## to get a vector back from data table or dplyr, use the dollar sign indexing
-    current_data$current[1:5]
-    
-    
-    
-    
-    
-    
-    
     
     
