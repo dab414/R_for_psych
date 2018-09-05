@@ -10,9 +10,9 @@ exercise1 <- function(){
   # your code here
   a <- 5
   b <- 6
-  result <- a + 7
+  result <- a + b
   
-  return(result)
+  try(return(result))
   
 }
 
@@ -26,7 +26,7 @@ exercise2 <- function(){
   ## return the third row of the column 'red' in the data frame 'df'
   
   ## your code here
-  
+
   
   return()
   
@@ -95,6 +95,7 @@ exercise5 <- function(){
 
 
 exercise6 <- function(){
+  try(
   df <- freeny
   ## Exercise 6 -- The INSANITY challenge
   ## round market potential to nearest tenth
@@ -104,9 +105,10 @@ exercise6 <- function(){
   ## you'll prob never have to do something like this on real data, but it's good to be a champ in general
   
   ## your code here
+  
+  
+
   return()
-  
-  
 }
 
 
