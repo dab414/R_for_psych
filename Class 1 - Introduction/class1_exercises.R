@@ -95,7 +95,6 @@ exercise5 <- function(){
 
 
 exercise6 <- function(){
-  try(
   df <- freeny
   ## Exercise 6 -- The INSANITY challenge
   ## round market potential to nearest tenth
