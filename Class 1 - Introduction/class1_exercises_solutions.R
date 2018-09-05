@@ -7,17 +7,13 @@ library(MASS)
 exercise1 <- function(){
   ## assign the values 5 and 6 to variables a and b, and return their sum
   
-  # your code here
+  ## your code here
   a <- 5
   b <- 6
-  result <- a + 7
   
-  return(result)
+  return(a + b)
   
 }
-
-
-
 
 
 exercise2 <- function(){
@@ -26,14 +22,11 @@ exercise2 <- function(){
   ## return the third row of the column 'red' in the data frame 'df'
   
   ## your code here
+  result <- df[3,'red']
   
-  
-  return()
+  return(result)
   
 }
-
-
-
 
 
 exercise3 <- function(){
@@ -46,53 +39,45 @@ exercise3 <- function(){
   
   
   ## your code here
+  fruit_data <- fruit_data[fruit_data$lemon > .25 & fruit_data$lemon < .75,]
+  pear <- fruit_data$pear
+  fruit_data$orange <- pear * fruit_data$lemon
+  result <- mean(fruit_data$orange) * mean(fruit_data$lemon)
   
-  
-  return()
+  return(result)
   
 }
 
-
-
-
-
 exercise4 <- function(){
-	df <- freeny
   ## Exercise 4 -- kinda hard
-  ## for the 'df' dataset, make a new variable with a value equal to 1 if income.level is greater than or equal to 6 and market.potential is greater than 13
+  ## for the 'freeny' dataset, make a new variable with value equal to 1 if income.level is greater than or equal to 6 and market.potential is greater than 13
   ## otherwise, return a 2 if price.index is between 4.60 and 4.65, otherwise return a 0
   ## return the mean of this new variable
   
   ## your code here
+  freeny$new <- with(freeny, ifelse(income.level >= 6 & market.potential > 13, 1, ifelse(price.index <= 4.65 & price.index >= 4.60,2,0)))
   
   
-  
-  return()
+  return(mean(freeny$new))
   
 }
-
-
-
-
 
 exercise5 <- function(){
   tooth <- ToothGrowth
   
   ## Exercise 5 -- ADVANCED
-  ## the dataset 'tooth' looks at the effect of Vitamin C on tooth growth in guinea pigs
+  ## the dataset 'tooth looks at the effect of Vitamin C on tooth growth in guinea pigs
   ## in the this dataset, run a t-test that tests the influence of supplemant (supp) on tooth length (each row represents one guinea pig)
   ## return all the results of the t-test, the p-value from this output will be extracted to test your result
   ## hint: the t-test function is: t.test()
 
-  ## your code here
+  t.test(vector1, vector2)
   
-  return()
+  result <- t.test(tooth[tooth$supp == 'OJ','len'], tooth[tooth$supp == 'VC', 'len'])
+  
+  return(result)
   
 }
-
-
-
-
 
 exercise6 <- function(){
   df <- freeny
@@ -100,48 +85,19 @@ exercise6 <- function(){
   ## round market potential to nearest tenth
   ## trim the whole dataset to only keep observations on the market.potential variable from the fifth occurance of 13.0 to the thirteenth occurance of 13.1
   ## return the mean of income level
-  ## and if you think you're real hard, do it all in one line of code, using only base-R functions
+  ## and if you think you're real hard, do it all in one line of code
   ## you'll prob never have to do something like this on real data, but it's good to be a champ in general
   
-  ## your code here
-  return()
+  
+  return(mean(df[which(round(df$market.potential,1) == 13.0)[5] : which(round(df$market.potential,1) == 13.1)[13],]$income.level))
   
   
 }
 
 
 
-###!!!!!!! DON'T CHANGE ANYTHING BELOW HERE !!!! ####### DON'T EVEN LOOK DOWN THERE
+###!!!!!!! DON'T CHANGE ANYTHING BELOW HERE !!!! #######
 #############################################################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-########## SERIOUSLY, STOP IT ###################
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -177,7 +133,7 @@ main <- function(){
   } else print("Exercise 2 is not returning any output. Did you put a value inside the parentheses of 'return()'?")
   
   if(!is.null(exercise3())){
-    print(test(round(exercise3(),1), 0.1))
+    print(test(round(exercise3(),2), 0.1))
   } else print("Exercise 3 is not returning any output. Did you put a value inside the parentheses of 'return()'?")
   
   if(!is.null(exercise4())){
@@ -190,7 +146,7 @@ main <- function(){
   
   if(!is.null(exercise6())){
     print(test(round(exercise6(), 2), 6.02))
-  } else print("Exercise 6 is not returning any output. Did you put a value inside the parentheses of 'return()'?")
+  } else print("Exercise 5 is not returning any output. Did you put a value inside the parentheses of 'return()'?")
   
   
 }

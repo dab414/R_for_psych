@@ -45,6 +45,18 @@
 		x[y] ## but now you can see how the syntax can get all tricky and nested
 
 		## you can also index with what's called a logical, basically passing a True/False statement and it returns all elements of the vector that are 'True'
+		x[c(TRUE, TRUE, TRUE, FALSE, FALSE)]
+
+		## if you use a mathematical operation on a logical, TRUE's are treated as 1, FALSEs are treated as 0
+		y <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+		sum(y)
+
+		z <- x > 2
+		sum(z) == sum(y)
+
+		## there are many ways to get to the same result
+		x[y]
+		## the method on the line below will be the most efficient when actually analyzing data
 		x[x>2] # returns '5,4,3'; notice how you have to refer to the vector again inside the vector
 
 		## you can also pass multiple conditionals with & (and), | (or)
