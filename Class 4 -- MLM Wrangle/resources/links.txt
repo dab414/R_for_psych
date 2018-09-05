@@ -1,8 +1,0 @@
-GLMM FAQ
-http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html
-
-Example of using bootstrapping to generate estimates of uncertainty
-  
-
-plotting predictions of mixed model
-https://stats.stackexchange.com/questions/135255/obtaining-adjusted-predicted-proportions-with-lme4-using-the-glmer-function
