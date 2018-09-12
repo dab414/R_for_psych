@@ -3,14 +3,14 @@
 .RData
 .Ruserdata
 
-Class\ 2\ --\ Manipulating\ Data/
+class2--manipulating_data
 
-Class\ 3a\ --\ Plotting\ Wrangle\ Sesh/
-Class\ 3\ --\ Plotting/
-Class\ 4\ --\ MLM\ Wrangle/
+class3a--plotting_wrangle
+class3--plotting
+class4--mlm_wrangle
 
-Class\ 1\ --\ Introduction/class1_exercises_solutions.R
-Class\ 1\ --\ Introduction/plan.txt
+class1--introduction/class1_exercises_solutions.R
+class1--introduction/plan.txt
 
 class_1a--scripting/session1a--scripting_output.html
 class_1a--scripting/session1a--scripting_output.pynb
