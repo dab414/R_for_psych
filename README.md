@@ -6,4 +6,4 @@ This is a repository containing materials for a grad seminar that I'm leading on
 
 Content will become available in the repository as we progress through the material throughout the term.
 
-See the [overview](Quantitative\ Things\ Overview.pdf) for more information.
+See the [overview](Quantitative%20Things%20Overview.pdf) for more information.
