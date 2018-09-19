@@ -10,6 +10,8 @@ class3--plotting
 class4--mlm_wrangle
 
 class1--introduction/plan.txt
+class1--introduction/session1--exercises.pynb
+class1--introduction/session1--basics_dfs.pynb
 
 class1a--scripting/session1a--scripting_output.ipynb
 class1a--scripting/session1a--functions.ipynb
